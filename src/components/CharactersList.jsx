@@ -19,7 +19,7 @@ export default CharactersList;
 import { EyeIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
-export function Character({ item, children }) {
+function Character({ item, children }) {
    return (
       <div className="list__item">
          <img
