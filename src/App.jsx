@@ -1,7 +1,10 @@
+import "./App.css";
+import Navbar from "./components/NavBar";
+
 const App = () => {
    return (
-      <div>
-         <h1 style={{ color: "white" }}>App</h1>
+      <div className="app">
+         <Navbar />
       </div>
    );
 };
