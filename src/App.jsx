@@ -59,6 +59,7 @@ const App = () => {
                selectedId={selectedId}
                onAddToFavorite={addToFavoriteHandler}
                isAddToFavorite={isAddToFavorite}
+               onCloseSelectedCharacter={() => setSelectedId(null)}
             />
          </Main>
       </div>

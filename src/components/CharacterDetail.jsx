@@ -1,10 +1,15 @@
-import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowUpCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
 
-const CharacterDetail = ({ selectedId, onAddToFavorite, isAddToFavorite }) => {
+const CharacterDetail = ({
+   selectedId,
+   onAddToFavorite,
+   isAddToFavorite,
+   onCloseSelectedCharacter,
+}) => {
    const [character, setCharacter] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
    const [episodes, setEpisodes] = useState([]);
@@ -52,6 +57,7 @@ const CharacterDetail = ({ selectedId, onAddToFavorite, isAddToFavorite }) => {
             character={character}
             onAddToFavorite={onAddToFavorite}
             isAddToFavorite={isAddToFavorite}
+            onCloseSelectedCharacter={onCloseSelectedCharacter}
          />
          <EpisodeList episodes={episodes} />
       </div>
@@ -64,6 +70,7 @@ export function CharacterSubInfo({
    character,
    onAddToFavorite,
    isAddToFavorite,
+   onCloseSelectedCharacter,
 }) {
    return (
       <div className="character-detail">
@@ -72,10 +79,27 @@ export function CharacterSubInfo({
             alt={character.name}
             className="character-detail__img"
          />
-         <div className="character-detail__info">
-            <h3 className="name">
-               <span>{character.gender === "Male" ? "👱🏻‍♂️" : "👩🏻‍🦳"}</span>
-               <span>&nbsp;{character.name}</span>
+         <div
+            className="character-detail__info"
+            style={{ width: "100%" }}>
+            <h3
+               className="name"
+               style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+               }}>
+               <div>
+                  <span>{character.gender === "Male" ? "👱🏻‍♂️" : "👩🏻‍🦳"}</span>
+                  <span>&nbsp;{character.name}</span>
+               </div>
+               <button onClick={onCloseSelectedCharacter}>
+                  <XCircleIcon
+                     className="icon close"
+                     style={{ color: "var(--rose-500)" }}
+                  />
+               </button>
             </h3>
             <div className="info">
                <span
