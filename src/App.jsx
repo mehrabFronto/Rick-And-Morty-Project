@@ -1,18 +1,21 @@
+import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
-import CharacterDetail, {
-   CharacterSubInfo,
-   EpisodeList,
-} from "./components/CharacterDetail";
+import CharacterDetail from "./components/CharacterDetail";
 import CharactersList from "./components/CharactersList";
 import Navbar from "./components/NavBar";
-import { character, episodes } from "./data/data";
 import useCharacters from "./hooks/useCharacters";
 
 const App = () => {
    const { characters, isLoading } = useCharacters(
       "https://rickandmortyapi.com/api/character",
    );
+
+   const [selectedId, setSelectedId] = useState(null);
+
+   const selectCharacterHandler = (id) => {
+      setSelectedId((prevId) => (prevId === id ? null : id));
+   };
 
    return (
       <div className="app">
@@ -22,13 +25,10 @@ const App = () => {
             <CharactersList
                characters={characters}
                isLoading={isLoading}
+               selectedId={selectedId}
+               selectCharacterHandler={selectCharacterHandler}
             />
-            <CharacterDetail
-               character={character}
-               episodes={episodes}>
-               <CharacterSubInfo character={character} />
-               <EpisodeList episodes={episodes} />
-            </CharacterDetail>
+            <CharacterDetail selectedId={selectedId} />
          </Main>
       </div>
    );

@@ -1,4 +1,9 @@
-const CharactersList = ({ characters, isLoading }) => {
+const CharactersList = ({
+   characters,
+   isLoading,
+   selectedId,
+   selectCharacterHandler,
+}) => {
    if (isLoading) return <Loader />;
 
    return (
@@ -7,8 +12,10 @@ const CharactersList = ({ characters, isLoading }) => {
             <Character
                key={item.id}
                item={item}>
-               <button className="icon red">
-                  <EyeIcon />
+               <button
+                  className="icon red"
+                  onClick={() => selectCharacterHandler(item.id)}>
+                  {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
                </button>
             </Character>
          ))}
@@ -18,7 +25,7 @@ const CharactersList = ({ characters, isLoading }) => {
 
 export default CharactersList;
 
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import Loader from "./Loader";
 
