@@ -29,7 +29,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import Loader from "./Loader";
 
-function Character({ item, children }) {
+export function Character({ item, children }) {
    return (
       <div className="list__item">
          <img
