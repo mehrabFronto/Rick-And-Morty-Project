@@ -1,9 +1,9 @@
 import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import Modal from "../components/Modal";
 import { Character } from "./CharactersList";
+import Modal from "./Modal";
 
-const Navbar = ({ children }) => {
+const NavBar = ({ children }) => {
    return (
       <nav className="navbar">
          <Logo />
@@ -12,7 +12,7 @@ const Navbar = ({ children }) => {
    );
 };
 
-export default Navbar;
+export default NavBar;
 
 const Logo = () => {
    return <div className="navbar__logo">LOGO 😍</div>;

@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharactersList from "./components/CharactersList";
-import Navbar, { Favorites, Search, SearchResult } from "./components/NavBar";
+import NavBar, { Favorites, Search, SearchResult } from "./components/NavBar";
 import useCharacters from "./hooks/useCharacters";
 import useLocalStorage from "./hooks/useLocalStorage";
 
@@ -36,7 +36,7 @@ const App = () => {
    return (
       <div className="app">
          <Toaster />
-         <Navbar>
+         <NavBar>
             <Search
                query={query}
                onChange={({ target }) => setQuery(target.value)}
@@ -47,7 +47,7 @@ const App = () => {
                favorites={favorites}
                onDeleteFromFavorites={deleteFromFavoritesHandler}
             />
-         </Navbar>
+         </NavBar>
          <Main>
             <CharactersList
                characters={characters}
