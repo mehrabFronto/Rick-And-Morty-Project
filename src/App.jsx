@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 import CharacterDetail, {
    CharacterSubInfo,
@@ -5,14 +6,23 @@ import CharacterDetail, {
 } from "./components/CharacterDetail";
 import CharactersList from "./components/CharactersList";
 import Navbar from "./components/NavBar";
-import { allCharacters, character, episodes } from "./data/data";
+import { character, episodes } from "./data/data";
+import useCharacters from "./hooks/useCharacters";
 
 const App = () => {
+   const { characters, isLoading } = useCharacters(
+      "https://rickandmortyapi.com/api/character",
+   );
+
    return (
       <div className="app">
+         <Toaster />
          <Navbar />
          <Main>
-            <CharactersList characters={allCharacters} />
+            <CharactersList
+               characters={characters}
+               isLoading={isLoading}
+            />
             <CharacterDetail
                character={character}
                episodes={episodes}>

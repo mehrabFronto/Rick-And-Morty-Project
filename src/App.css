@@ -257,3 +257,13 @@
       flex-direction: row;
    }
 }
+
+.loader {
+   width: 100%;
+}
+
+@media (min-width: 768px) {
+   .loader {
+      width: 45%;
+   }
+}

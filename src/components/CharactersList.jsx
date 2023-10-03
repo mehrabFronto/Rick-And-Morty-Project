@@ -1,4 +1,6 @@
-const CharactersList = ({ characters }) => {
+const CharactersList = ({ characters, isLoading }) => {
+   if (isLoading) return <Loader />;
+
    return (
       <div className="characters-list">
          {characters.map((item) => (
@@ -18,6 +20,7 @@ export default CharactersList;
 
 import { EyeIcon } from "@heroicons/react/24/outline";
 import React from "react";
+import Loader from "./Loader";
 
 function Character({ item, children }) {
    return (
