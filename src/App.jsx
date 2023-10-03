@@ -3,12 +3,15 @@ import { Toaster } from "react-hot-toast";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharactersList from "./components/CharactersList";
-import Navbar from "./components/NavBar";
+import Navbar, { Search, SearchResult } from "./components/NavBar";
 import useCharacters from "./hooks/useCharacters";
 
 const App = () => {
+   const [query, setQuery] = useState("");
+
    const { characters, isLoading } = useCharacters(
-      "https://rickandmortyapi.com/api/character",
+      "https://rickandmortyapi.com/api/character?name",
+      query,
    );
 
    const [selectedId, setSelectedId] = useState(null);
@@ -20,7 +23,13 @@ const App = () => {
    return (
       <div className="app">
          <Toaster />
-         <Navbar />
+         <Navbar>
+            <Search
+               query={query}
+               onChange={({ target }) => setQuery(target.value)}
+            />
+            <SearchResult numOfResult={characters.length} />
+         </Navbar>
          <Main>
             <CharactersList
                characters={characters}
