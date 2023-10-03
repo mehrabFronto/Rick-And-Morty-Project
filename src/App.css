@@ -32,8 +32,8 @@
    color: var(--rose-500);
 }
 .navbar .heart .icon {
-   width: 2rem;
-   height: 2rem;
+   width: 1.8rem;
+   height: 1.8rem;
 }
 .navbar .heart .badge {
    font-size: 0.9rem;
@@ -53,6 +53,10 @@
 @media (min-width: 768px) {
    .navbar__result {
       display: block;
+   }
+   .navbar .heart .icon {
+      width: 2rem;
+      height: 2rem;
    }
 }
 
@@ -251,5 +255,15 @@
    }
    .character-detail__info .actions {
       flex-direction: row;
+   }
+}
+
+.loader {
+   width: 100%;
+}
+
+@media (min-width: 768px) {
+   .loader {
+      width: 45%;
    }
 }
