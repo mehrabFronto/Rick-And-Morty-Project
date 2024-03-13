@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
-export default function useCharacters(url, query) {
-   const [characters, setCharacters] = useState([]);
+
+export default function useCharacters(url: string, query: string) {
+   const [characters, setCharacters] = useState<Character[]>([]);
    const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {
@@ -15,12 +16,15 @@ export default function useCharacters(url, query) {
             const { data } = await axios.get(`${url}=${query}`, { signal });
             setCharacters(data.results.slice(0, 5));
          } catch (err) {
-            // fetch => err.name ==="AbortError"
-            // axios => axios.isCancel()
-            if (!axios.isCancel()) {
-               setCharacters([]);
-               toast.error(err.response.data.error);
+            if(err instanceof Error){
+                // fetch => err.name ==="AbortError"
+                // axios => axios.isCancel()
+                if (!axios.isCancel("")) {
+                    setCharacters([]);
+                    toast.error(err.response.data.error);
+                }
             }
+           
          } finally {
             setIsLoading(false);
          }
