@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { CharacterType } from "../types/CharacterType";
 
 
 export default function useCharacters(url: string, query: string) {
-   const [characters, setCharacters] = useState<Character[]>([]);
+   const [characters, setCharacters] = useState<CharacterType[]>([]);
    const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {

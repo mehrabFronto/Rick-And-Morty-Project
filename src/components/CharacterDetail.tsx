@@ -3,16 +3,36 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
+import { CharacterType } from "../types/CharacterType";
+
+
+type CharacterDetailProps = {
+   selectedId: number | null,
+   onAddToFavorite: (character: CharacterType) => void,
+   isAddToFavorite: boolean,
+   onCloseSelectedCharacter: () => void,
+}
+
+
+type EpisodesType = {
+   air_date: string;
+   characters: string[];
+   created: string;
+   episode: string;
+   id: number;
+   name: string;
+   url: string;
+}
 
 const CharacterDetail = ({
    selectedId,
    onAddToFavorite,
    isAddToFavorite,
    onCloseSelectedCharacter,
-}) => {
-   const [character, setCharacter] = useState(null);
+}: CharacterDetailProps) => {
+   const [character, setCharacter] = useState<CharacterType | null>(null);
    const [isLoading, setIsLoading] = useState(false);
-   const [episodes, setEpisodes] = useState([]);
+   const [episodes, setEpisodes] = useState<EpisodesType[] | []>([]);
 
    useEffect(() => {
       async function fetchData() {
@@ -23,7 +43,7 @@ const CharacterDetail = ({
             );
             setCharacter(data);
 
-            const episodesId = data.episode.map((e) => e.split("/").at(-1)); // [1, 2, 3]
+            const episodesId: number[] = data.episode.map((e: string) => e.split("/").at(-1)); // [1, 2, 3]
             const { data: episodeData } = await axios.get(
                `https://rickandmortyapi.com/api/episode/${episodesId}`,
             );
@@ -66,12 +86,19 @@ const CharacterDetail = ({
 
 export default CharacterDetail;
 
+type CharacterSubInfoProps = {
+   character: CharacterType;
+   onAddToFavorite: (character: CharacterType) => void,
+   isAddToFavorite: boolean,
+   onCloseSelectedCharacter: () => void,
+}
+
 export function CharacterSubInfo({
    character,
    onAddToFavorite,
    isAddToFavorite,
    onCloseSelectedCharacter,
-}) {
+}: CharacterSubInfoProps) {
    return (
       <div className="character-detail">
          <img
@@ -99,6 +126,7 @@ export function CharacterSubInfo({
                      className="icon close"
                      style={{ color: "var(--rose-500)" }}
                   />
+                  {/*  */}
                </button>
             </h3>
             <div className="info">
@@ -129,7 +157,7 @@ export function CharacterSubInfo({
    );
 }
 
-export function EpisodeList({ episodes }) {
+export function EpisodeList({ episodes }: { episodes: EpisodesType[] | [] }) {
    // true => earliest => asc
    const [sortBy, setSortBy] = useState(true);
 
@@ -137,11 +165,11 @@ export function EpisodeList({ episodes }) {
 
    if (sortBy) {
       sortedEpisodes = [...episodes].sort(
-         (a, b) => new Date(a.created) - new Date(b.created),
+         (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime(),
       );
    } else {
       sortedEpisodes = [...episodes].sort(
-         (a, b) => new Date(b.created) - new Date(a.created),
+         (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
       );
    }
 
@@ -154,6 +182,7 @@ export function EpisodeList({ episodes }) {
                   className="icon"
                   style={{ rotate: sortBy ? "0deg" : "180deg" }}
                />
+               {/*  */}
             </button>
          </div>
          <ul>
