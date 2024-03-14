@@ -1,4 +1,4 @@
-type Character = {
+export type CharacterType = {
     created: string;
     episode: string[];
     gender: "Male" | "Female";

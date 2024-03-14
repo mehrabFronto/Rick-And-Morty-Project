@@ -6,8 +6,9 @@ import CharactersList from "./components/CharactersList";
 import useCharacters from "./hooks/useCharacters";
 import useLocalStorage from "./hooks/useLocalStorage";
 import NavBar, { Favorites, Search, SearchResult } from "./components/Navbar";
+import { CharacterType } from "./types/CharacterType";
 
-type FavoriteType = [ Character[], React.Dispatch<Character[]>];
+type FavoriteType = [ CharacterType[], React.Dispatch<CharacterType[]>];
 
 const App = () => {
     const [query, setQuery] = useState("");
@@ -25,7 +26,7 @@ const App = () => {
         setSelectedId((prevId) => (prevId === id ? null : id));
     };
 
-    const addToFavoriteHandler = (character: Character) => {
+    const addToFavoriteHandler = (character: CharacterType) => {
         setFavorites([...favorites, character]);
     };
 

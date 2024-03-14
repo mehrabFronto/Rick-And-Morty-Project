@@ -1,9 +1,16 @@
+type CharactersListProps = {
+   characters: CharacterType[],
+   isLoading: boolean,
+   selectedId: number | null,
+   selectCharacterHandler: (id: number) => void,
+}
+
 const CharactersList = ({
    characters,
    isLoading,
    selectedId,
    selectCharacterHandler,
-}) => {
+}: CharactersListProps) => {
    if (isLoading) return <Loader />;
 
    return (
@@ -26,10 +33,22 @@ const CharactersList = ({
 export default CharactersList;
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import React from "react";
 import Loader from "./Loader";
+import { CharacterType } from "../types/CharacterType";
+import { ReactNode } from "react";
 
-export function Character({ item, children }) {
+type CharacterProps = {
+   children: ReactNode;
+   item: {
+      image:string;
+      name: string;
+      gender: string;
+      status: string;
+      species: string
+   }
+}
+
+export function Character({ item, children }: CharacterProps) {
    return (
       <div className="list__item">
          <img
@@ -43,7 +62,7 @@ export function Character({ item, children }) {
    );
 }
 
-function CharacterName({ item }) {
+function CharacterName({ item }: { item: { gender: string; name: string } }) {
    return (
       <h3 className="name">
          <span>{item.gender === "Male" ? "👱🏻‍♂️" : "👩🏻‍🦳"}</span>
@@ -52,7 +71,7 @@ function CharacterName({ item }) {
    );
 }
 
-function CharacterInfo({ item }) {
+function CharacterInfo({ item }: { item: { status: string; species: string } }) {
    return (
       <div className="list-item__info info">
          <span

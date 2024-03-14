@@ -1,6 +1,14 @@
 import { XCircleIcon } from "@heroicons/react/24/outline";
+import { ReactNode } from "react";
 
-function Modal({ title, children, onOpen, open }) {
+type ModalProps = {
+   title: string;
+   children: ReactNode;
+   onOpen: (isOpen: boolean) => void;
+   open: boolean;
+}
+
+function Modal({ title, children, onOpen, open }: ModalProps) {
    if (!open) return null;
    return (
       <div>
@@ -12,6 +20,7 @@ function Modal({ title, children, onOpen, open }) {
                <h2 className="title">{title}</h2>
                <button onClick={() => onOpen(false)}>
                   <XCircleIcon className="icon close" />
+                  {/*  */}
                </button>
             </div>
             {children}

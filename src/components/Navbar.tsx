@@ -1,9 +1,10 @@
 import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { CharacterType } from "../types/CharacterType";
 import { Character } from "./CharactersList";
 import Modal from "./Modal";
 
-const NavBar = ({ children }) => {
+const NavBar = ({ children }: { children: ReactNode }) => {
    return (
       <nav className="navbar">
          <Logo />
@@ -18,7 +19,12 @@ const Logo = () => {
    return <div className="navbar__logo">LOGO 😍</div>;
 };
 
-export function Search({ query, onChange }) {
+type SearchProps = {
+   query: string; 
+   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export function Search({ query, onChange }: SearchProps) {
    return (
       <input
          value={query}
@@ -30,15 +36,21 @@ export function Search({ query, onChange }) {
    );
 }
 
-export function SearchResult({ numOfResult }) {
+export function SearchResult({ numOfResult }: { numOfResult: number }) {
    return <div className="navbar__result">Found {numOfResult} characters</div>;
+}
+
+type FavoritesProps = {
+   numOfFavorites: number,
+   favorites: CharacterType[],
+   onDeleteFromFavorites: (id: number) => void,
 }
 
 export function Favorites({
    numOfFavorites,
    favorites,
    onDeleteFromFavorites,
-}) {
+}: FavoritesProps){
    const [isOpen, setIsOpen] = useState(false);
 
    return (
@@ -65,6 +77,7 @@ export function Favorites({
                         className="icon red"
                         onClick={() => onDeleteFromFavorites(item.id)}>
                         <TrashIcon />
+                        {/*  */}
                      </button>
                   </Character>
                ))
