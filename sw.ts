@@ -8,6 +8,6 @@ self.addEventListener("activate", (e) => {
   console.log("service worker activated...!");
 });
 
-self.addEventListener("fetch", (e: FetchEvent) => {
-  console.log(e.request.url);
-});
+// self.addEventListener("fetch", (e: FetchEvent) => {
+//   console.log(e.request.url);
+// });
