@@ -1,11 +1,23 @@
 const staticItems = [
   "/",
-  "/index.html",
-  "/manifest.json",
-  "/src/index.css",
-  "/src/App.css",
-  "/images/icons/ios/144.png",
+  "/@react-refresh",
+  "/@vite/client",
   "/images/icons/android/android-launchericon-192-192.png",
+  "/images/icons/ios/144.png",
+  "/manifest.json",
+  "/src/App.css",
+  "/src/App.tsx",
+  "/src/SwDev.tsx",
+  "/src/components/CharacterDetail.tsx",
+  "/src/components/CharactersList.tsx",
+  "/src/components/Loader.tsx",
+  "/src/components/Modal.tsx",
+  "/src/components/Navbar.tsx",
+  "/src/hooks/useCharacters.ts",
+  "/src/hooks/useLocalStorage.ts",
+  "/src/index.css",
+  "/src/main.tsx",
+  "/node_modules/vite/dist/client/env.mjs",
 ];
 
 const STATIC_CACHE = "static-v1";
@@ -14,34 +26,27 @@ const DYNAMIC_CACHE = "dynamic-v1";
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(STATIC_CACHE).then((cache) => {
-      return cache.addAll(staticItems);
+      cache.addAll(staticItems);
     })
   );
 });
 
-self.addEventListener("fetch", (event: FetchEvent) => {
-  const url = new URL(event.request.url);
+self.addEventListener("activate", (e) => {
+  console.log("activated", e);
+});
 
-  // Ignore requests for Vite's development tools
-  if (
-    url.pathname.startsWith("/@vite/") ||
-    url.pathname.startsWith("/@react-refresh")
-  ) {
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return cached response if available
-      if (response) return response;
-
-      // Fetch request and dynamically cache the response
-      return fetch(event.request).then((fetchResponse) => {
-        return caches.open(DYNAMIC_CACHE).then((cache) => {
-          cache.put(event.request, fetchResponse.clone());
-          return fetchResponse;
-        });
-      });
+self.addEventListener("fetch", (e) => {
+  e.respondWith(
+    caches.match(e.request).then((res) => {
+      return (
+        res ||
+        fetch(e.request).then((fetchRes) => {
+          return caches.open(DYNAMIC_CACHE).then((cache) => {
+            cache.put(e.request, fetchRes.clone());
+            return fetchRes;
+          });
+        })
+      );
     })
   );
 });
