@@ -18,7 +18,7 @@ const SwDev = () => {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("../sw.ts");
+      navigator.serviceWorker.register("/sw.ts");
     }
 
     if (!window.matchMedia("(display-mode: standalone)").matches)
